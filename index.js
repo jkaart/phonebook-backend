@@ -34,6 +34,7 @@ app.use(express.json())
 
 morgan.token('body', (request) =>  request.method === 'POST' ? JSON.stringify(request.body) : null)
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+app.use(express.static('dist'))
 
 //Endpoints
 app.get('/info', (request, response) => {
