@@ -1,8 +1,7 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const app = express()
-
-
 
 let persons = [
   {
@@ -29,6 +28,8 @@ let persons = [
 
 const generateId = () => Math.floor(Math.random() * 1000).toString()
 
+//Middlewares
+app.use(cors())
 app.use(express.json())
 
 morgan.token('body', (request) =>  request.method === 'POST' ? JSON.stringify(request.body) : null)
@@ -76,7 +77,7 @@ app.post('/api/persons', (request, response) => {
   }
   const person = { ...request.body, id }
   persons.push(person)
-  response.status(201).end()
+  response.status(201).json(person)
 })
 
 const unknownEndpoint = (request, response) => {
